@@ -6,11 +6,12 @@ const { BASE_URL } = process.env;
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
+
   if (!user) {
     throw RequestError(401, "Email not found");
   }
   if (user.verify) {
-    throw RequestError(401, "Email already verify");
+    throw RequestError(400, "Verification has already been passed");
   }
 
   const verifyEmail = {
